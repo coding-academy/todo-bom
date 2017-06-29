@@ -3,7 +3,8 @@ import axios from 'axios'
 const emptyTodo = () => ({
   _id: null,
   txt: '',
-  completed: false
+  completed: false,
+  importance: 2
 })
 
 const addTodo = todo => {

@@ -4,8 +4,17 @@
     <todos-filter></todos-filter>
     <ul>
       <li v-for="(todo, idx) in todos" :key="todo._id">
+      <button>&uarr;</button>
+      <button>&darr;</button>
         {{idx}}.
         <input type="checkbox" :checked="todo.completed" @change="toggleTodo(todo)"> {{todo.txt}}
+        <h6>
+          <button :disabled="todo.importance >= 3" @click="updateImportance(todo, 1)">+</button>
+          Importance: {{todo.importance}}
+          <button :disabled="todo.importance <= 1" @click="updateImportance(todo, -1)">-</button>
+
+        </h6>
+
       </li>
       <form @submit.prevent="addTodo">
         <input type="text" v-model="newTodo.txt">
@@ -19,6 +28,9 @@
 
 <script>
 
+
+import { TODO_CREATE, TODO_UPDATE, TODO_LOAD } from '../store/todos.store'
+
 import todoService from '../services/todo.service'
 import TodosFilter from './TodosFilter'
 
@@ -29,7 +41,7 @@ export default {
     }
   },
   created() {
-    this.$store.dispatch({ type: 'TODO_LOAD'});
+    this.$store.dispatch({ type: TODO_LOAD });
   },
   computed: {
     todos() {
@@ -38,14 +50,26 @@ export default {
   },
   methods: {
     toggleTodo(todo) {
-      this.$store.dispatch({ type: 'TODO_TOGGLE', todo });
+      const todoUpdated = Object.assign({},
+        todo,
+        { completed: !todo.completed }
+      )
+      this.$store.dispatch({ type: TODO_UPDATE, todo: todoUpdated });
     },
     addTodo() {
-      this.$store.dispatch({ type: 'TODO_CREATE', todo: this.newTodo });
+      this.$store.dispatch({ type: TODO_CREATE, todo: this.newTodo });
       this.newTodo = todoService.emptyTodo();
+    },
+    updateImportance(todo, diff) {
+      const todoUpdated = Object.assign({},
+        todo,
+        { importance: todo.importance + diff }
+      )
+      this.$store.dispatch({ type: TODO_UPDATE, todo: todoUpdated });
     }
+
   },
-  components:{
+  components: {
     TodosFilter
   }
 }
@@ -62,5 +86,10 @@ li {
   display: block;
   padding: 10px;
   border-bottom: 1px solid lightgray;
+}
+
+button[disabled] {
+  background-color: white;
+  cursor: not-allowed;
 }
 </style>
