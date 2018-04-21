@@ -12,9 +12,7 @@
           <button :disabled="todo.importance >= 3" @click="updateImportance(todo, 1)">+</button>
           Importance: {{todo.importance}}
           <button :disabled="todo.importance <= 1" @click="updateImportance(todo, -1)">-</button>
-
         </h6>
-
       </li>
       <form @submit.prevent="addTodo">
         <input type="text" v-model="newTodo.txt">
@@ -37,7 +35,7 @@ import TodosFilter from './TodosFilter'
 export default {
   data() {
     return {
-      newTodo: todoService.emptyTodo()
+      newTodo: todoService.emptyObj()
     }
   },
   created() {
@@ -58,7 +56,7 @@ export default {
     },
     addTodo() {
       this.$store.dispatch({ type: TODO_CREATE, todo: this.newTodo });
-      this.newTodo = todoService.emptyTodo();
+      this.newTodo = todoService.emptyObj();
     },
     updateImportance(todo, diff) {
       const todoUpdated = Object.assign({},

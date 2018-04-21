@@ -1,13 +1,13 @@
 import axios from 'axios'
 
-const emptyTodo = () => ({
+const emptyObj = () => ({
   _id: null,
   txt: '',
   completed: false,
   importance: 2
 })
 
-const addTodo = todo => {
+const add = todo => {
   return axios.post('http://localhost:3003/data/todo', todo)
     .then(function (response) {
       console.log(response);
@@ -37,8 +37,8 @@ const update = todo => {
 
 
 export default {
-  emptyTodo,
-  addTodo,
+  emptyObj,
+  add,
   update,
   query
 }

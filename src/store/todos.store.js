@@ -3,6 +3,7 @@ export const TODO_UPDATE      = 'TODO_UPDATE';
 export const TODO_CREATE      = 'TODO_CREATE';
 
 import todoService from '../services/todo.service'
+// import todoService from '../services/todo.mock.service'
 
 const state = {
   todos: [],
@@ -58,7 +59,7 @@ const actions = {
       });
   },
   [TODO_CREATE](context, payload) {
-    var prm = todoService.addTodo(payload.todo);
+    var prm = todoService.add(payload.todo);
     prm.then(res => {
       payload.todo = res;
       context.commit(payload);

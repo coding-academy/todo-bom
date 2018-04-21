@@ -12,9 +12,6 @@ import TodosProgress from './components/TodosProgress'
 
 export default {
   name: 'app',
-  created() {
-    window.theStore = this.$store
-  },
   components: {
     TodosProgress
   }
