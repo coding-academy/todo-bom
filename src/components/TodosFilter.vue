@@ -16,6 +16,9 @@
 </template>
 
 <script>
+
+import {SET_FILTER} from '../store/todos.store'
+
 export default {
   data() {
     return {
@@ -26,7 +29,7 @@ export default {
     localFilter: {
       handler()  {
         console.log('CHANGED!');
-        this.$store.commit({type: 'SET_FILTER',
+        this.$store.commit({type: SET_FILTER,
                            filter:this.localFilter});
       },
       deep: true

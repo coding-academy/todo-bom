@@ -1,9 +1,10 @@
 export const TODO_LOAD        = 'TODO_LOAD';
 export const TODO_UPDATE      = 'TODO_UPDATE';
 export const TODO_CREATE      = 'TODO_CREATE';
+export const SET_FILTER      = 'SET_FILTER';
 
-import todoService from '../services/todo.service'
-// import todoService from '../services/todo.mock.service'
+// import todoService from '../services/todo.service'
+import todoService from '../services/todo.mock.service'
 
 const state = {
   todos: [],
@@ -44,7 +45,7 @@ const mutations = {
   [TODO_CREATE](state, { todo }) {
     state.todos.push(todo)
   },
-  SET_FILTER(state, { filter }) {
+  [SET_FILTER](state, { filter }) {
     state.filterBy = filter;
   }
 }

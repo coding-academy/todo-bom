@@ -4,9 +4,6 @@
     <todos-filter></todos-filter>
     <ul>
       <li v-for="(todo, idx) in todos" :key="todo._id">
-      <button>&uarr;</button>
-      <button>&darr;</button>
-        {{idx}}.
         <input type="checkbox" :checked="todo.completed" @change="toggleTodo(todo)"> {{todo.txt}}
         <h6>
           <button :disabled="todo.importance >= 3" @click="updateImportance(todo, 1)">+</button>
@@ -47,16 +44,16 @@ export default {
     }
   },
   methods: {
+     addTodo() {
+      this.$store.dispatch({ type: TODO_CREATE, todo: this.newTodo });
+      this.newTodo = todoService.emptyObj();
+    },
     toggleTodo(todo) {
       const todoUpdated = Object.assign({},
         todo,
         { completed: !todo.completed }
       )
       this.$store.dispatch({ type: TODO_UPDATE, todo: todoUpdated });
-    },
-    addTodo() {
-      this.$store.dispatch({ type: TODO_CREATE, todo: this.newTodo });
-      this.newTodo = todoService.emptyObj();
     },
     updateImportance(todo, diff) {
       const todoUpdated = Object.assign({},
